@@ -59,12 +59,20 @@ db.restaurants.find({$nor: [{"borough": "Staten Island"},{"borough": "Queens"},{
 db.restaurants.find({"grades.score": {$not: {$gt: 10}}},{"restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1, "_id": 0})
 
 21. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que preparen peix excepte 'American' i 'Chinees' o el name del restaurant comença amb lletres 'Wil'
-
+db.restaurants.find({"cuisine": "Seafood", "name": {$not: {$regex: '^Wil'}}},{"restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1, "_id": 0})
 
 22. Escriu una consulta per trobar el restaurant_id, name, i grades per a aquells restaurants que aconsegueixin un grau "A" i un score 11 en dades d'estudi ISODate "2014-08-11T00:00:00Z"
+db.restaurants.find({"grades.score": 11, "grades.grade": "A", "grades.date": ISODate('2014-08-11T00:00:00Z')},{"restaurant_id": 1, "name": 1, "grades": 1, "_id": 0})
+
 23. Escriu una consulta per trobar el restaurant_id, name i grades per a aquells restaurants on el 2n element de varietat de graus conté un grau de "A" i marcador 9 sobre un ISODate "2014-08-11T00:00:00Z"
+db.restaurants.find({"grades.1.score": 9, "grades.1.grade": "A", "grades.date": ISODate('2014-08-11T00:00:00Z')},{"restaurant_id": 1, "name": 1, "grades": 1, "_id": 0})
+
 24. Escriu una consulta per trobar el restaurant_id, name, adreça i ubicació geogràfica per a aquells restaurants on el segon element del array coord conté un valor quin és més que 42 i fins a 52
+db.restaurants.find({"address.coord.1": {$gt: 42, $lte: 52}},{"restaurant_id": 1, "name": 1, "address": 1, "_id": 0})
+
 25. Escriu una consulta per organitzar el nom dels restaurants en ordre ascendent juntament amb totes les columnes
+
+
 26. Escriu una consulta per organitzar el nom dels restaurants en descendir juntament amb totes les columnes
 27. Escriu una consulta a organitzar el nom de la cuisine en ordre ascendent i per el mateix barri de cuisine. Ordre descendint
 28. Escriu una consulta per saber tant si totes les direccions contenen el carrer o no
