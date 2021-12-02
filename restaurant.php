@@ -71,12 +71,25 @@ db.restaurants.find({"grades.1.score": 9, "grades.1.grade": "A", "grades.date": 
 db.restaurants.find({"address.coord.1": {$gt: 42, $lte: 52}},{"restaurant_id": 1, "name": 1, "address": 1, "_id": 0})
 
 25. Escriu una consulta per organitzar el nom dels restaurants en ordre ascendent juntament amb totes les columnes
-
+db.restaurants.find({}).sort({"name": 1})
 
 26. Escriu una consulta per organitzar el nom dels restaurants en descendir juntament amb totes les columnes
+db.restaurants.find({}).sort({"name": -1})
+
 27. Escriu una consulta a organitzar el nom de la cuisine en ordre ascendent i per el mateix barri de cuisine. Ordre descendint
+db.restaurants.find({}).sort({"cuisine": 1, "borough": -1})
+
 28. Escriu una consulta per saber tant si totes les direccions contenen el carrer o no
+db.restaurants.find({"address.street": {$exists: 1}})
+
 29. Escriu una consulta quin seleccionarà tots el documents en la col·lecció de restaurants on el valor del camp coord és Double
+db.restaurants.find({"address.coord": {$type: "double"}})
+
 30. Escriu una consulta quin seleccionarà el restaurant_id, name i grade per a aquells restaurants quins retorns 0 com a resta després de dividir el marcador per 7
+db.restaurants.find({"grades.score": {$mod: [7, 0]}},{"restaurant_id": 1, "name": 1, "grades": 1, "_id": 0})
+
 31. Escriu una consulta per trobar el name de restaurant, borough, longitud i altitud i cuisine per a aquells restaurants que contenen 'mon' com tres lletres en algun lloc del seu name
+db.restaurants.find({"name": {$regex: 'mon'}},{"borough": 1, "name": 1, "address.coord": 1, "cuisine": 1, "_id": 0})
+
 32. Escriu una consulta per trobar el name de restaurant, borough, longitud i latitud i cuisine per a aquells restaurants que conteinen 'Mad' com primeres tres lletres del seu name
+db.restaurants.find({"name": {$regex: '^Mad'}},{"borough": 1, "name": 1, "address.coord": 1, "cuisine": 1, "_id": 0})
